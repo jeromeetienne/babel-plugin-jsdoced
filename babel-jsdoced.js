@@ -1,8 +1,4 @@
-var babylon = require('babylon')
-var template = require('babel-template')
-var generate = require('babel-generator')
-
-var jsdocParse	= require('./jsdocParse.js')
+var jsdocParse	= require('./vendor/jsdocParse.js')
 
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
