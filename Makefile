@@ -1,8 +1,8 @@
 sample-functiondeclaration:
-	babel ./examples/sample-functiondeclaration.js --plugins ../babel-jsdoced.js
+	babel --plugins ../babel-jsdoced.js ./examples/sample-functiondeclaration.js
 
 sample-functionexpression:
-	babel ./examples/sample-functionexpression.js --plugins ../babel-jsdoced.js
+	babel --plugins ../babel-jsdoced.js ./examples/sample-functionexpression.js
 
 test:
 	babel --plugins ../babel-jsdoced.js ./examples/test-params.js | node

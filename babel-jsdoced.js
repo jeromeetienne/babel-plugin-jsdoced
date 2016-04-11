@@ -4,7 +4,7 @@ var jsdocParse	= require('./vendor/jsdocParse.js')
 //                Comments
 //////////////////////////////////////////////////////////////////////////////////
 function types2Conditions(type, varName){
-        console.error('types2Conditions', arguments)
+        // console.error('types2Conditions', arguments)
 
         // handle multiple types case
         if( type.indexOf('|') !== -1 ){
@@ -59,6 +59,16 @@ module.exports = function(babel) {
                         	contentLines   = file.file.code.split('\n')
 			},
 
+                        ArrowFunctionExpression : function(path){
+                                console.log('ArrowFunctionExpression HERE', path.node)
+                                
+                                // detect the implicit return case
+                                // LATER - convert that into BlockStatement with a return
+                                if( path.node.body.type !== 'BlockStatement' ) return
+
+                                var nodeFunctionBody = path.node.body.body
+                                processFunction(path, nodeFunctionBody)
+                        },
 
                         FunctionExpression : function(path) {
                                 console.error("FunctionExpression HERE", path.node.loc.start.line)
@@ -113,8 +123,6 @@ module.exports = function(babel) {
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if (path.node[RETURN_MARKER]) return;
                                 
-                                if( jsdocJson.return === undefined ) return
-
                                 var code = `
                                         {
                                                 var VARNAME = (RETURN_VALUE);
@@ -131,10 +139,12 @@ module.exports = function(babel) {
                                         VARNAME : path.scope.generateUidIdentifier("returnValue"),
                                         RETURN_VALUE : path.node.argument,
                                 });
+                                // mark the return at the end as 'alreadyProcessed'
                                 block.body[block.body.length-1][RETURN_MARKER] = true;
+                                
                                 path.replaceWith(block);
                         },
                 }
-                path.traverse(visitorReturn);
+                if( jsdocJson.return ) path.traverse(visitorReturn);
         }
 }
