@@ -1,2 +1,1 @@
-# babel-plugin-transform-jsdoced
-babel plugin to implement jsdoced javascript
+# experimentation to implement jsdoced javascript in a babel plugin
