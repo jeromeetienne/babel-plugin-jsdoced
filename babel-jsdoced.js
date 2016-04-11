@@ -63,7 +63,9 @@ module.exports = function(babel) {
                                 console.log('ArrowFunctionExpression HERE', path.node)
                                 
                                 // detect the implicit return case
-                                // LATER - convert that into BlockStatement with a return
+                                // LATER - convert that into BlockStatement with a return. rewrite it with a template ?
+                                // => expression is the same as => { return expression }
+                                // so rewrite it and then go in the normal case
                                 if( path.node.body.type !== 'BlockStatement' ) return
 
                                 var nodeFunctionBody = path.node.body.body
