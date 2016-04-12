@@ -1,8 +1,8 @@
-- test arrow Function
+- DONE test arrow Function
   - with implicit return
   - with explicit return
 
-- implement testing
+- DONE implement testing
   - use mocha
   - link with npm test
   - see about triggering github auto test
