@@ -3,7 +3,7 @@
  * @param  {Number} v [description]
  * @return {Number}   [description]
  */
-var slota = (v) => v * 2
+var slota = (v) => { return v * 2 }
 
 
 

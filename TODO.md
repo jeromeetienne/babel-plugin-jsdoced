@@ -1,12 +1,15 @@
+- test arrow Function
+  - with implicit return
+  - with explicit return
+
 - implement testing
   - use mocha
   - link with npm test
   - see about triggering github auto test
 - should i write a presets ?
-- clean up node_modules
-  - fullfil the package.json
-- see how it works in a browser
-- what about sourceMap
+- DONE clean up node_modules
+- DONE see how it works in a browser
+- DONE what about sourceMap
 - DONE check if the plugin name is the proper one
 - DONE see how it support es6
 
