@@ -9,6 +9,7 @@ var testFunctionParam = (x) => { return x+2 }
  */
 var testFunctionReturn = (x) => x
 
+// export local variables
 module.exports = {
         testFunctionParam : testFunctionParam,
         testFunctionReturn: testFunctionReturn
