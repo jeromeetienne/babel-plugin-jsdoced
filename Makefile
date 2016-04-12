@@ -13,5 +13,12 @@ sample-functiondeclaration:
 sample-functionexpression:
 	babel --plugins ../babel-jsdoced.js ./examples/sample-functionexpression.js
 
+sourcemaps-test:
+	babel --plugins ../babel-jsdoced.js --source-maps=true ./examples/sample-functiondeclaration.js
+
+browser-sourcemaps:
+	babel --plugins ../babel-jsdoced.js  --source-maps=true ./examples/browser-sourcemaps.js  -o ./examples/browser-sourcemaps-build.js
+	@echo Now goto http://127.0.0.1:8080/examples/browser-sourcemaps.html
+
 test:
 	babel --plugins ../babel-jsdoced.js ./examples/test-params.js | node

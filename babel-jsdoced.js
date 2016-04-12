@@ -118,10 +118,10 @@ module.exports = function(babel) {
                 //////////////////////////////////////////////////////////////////////////////////
                 if( jsdocJson.params ){
                         var code = '{\n'
-                        Object.keys(jsdocJson.params).forEach(function(varName){
+                        Object.keys(jsdocJson.params).forEach(function(varName, index){
                                 var param = jsdocJson.params[varName]
                                 var conditionString = types2Conditions(param.type, varName);
-                                code += '\tconsole.assert('+conditionString+', "Params '+varName+' isnt of proper type");\n'
+                                code += '\tconsole.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");\n'
                         })
                         code += '}\n'
                         var paramTemplate = babel.template(code);
@@ -147,7 +147,7 @@ module.exports = function(babel) {
                                                 var VARNAME = (RETURN_VALUE);
                                                 `
                                 var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
-                                code += 'console.assert('+conditionString+', "Invalid return value isnt of the good type");\n'
+                                code += 'console.assert('+conditionString+', "Invalid type for return value");\n'
                                 code += `
                                                 return VARNAME;
                                         }
