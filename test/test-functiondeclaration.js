@@ -2,10 +2,22 @@ var code = `
 /**
  * @param {String} myString - super string
  */
-function myFunctionDeclaration(myString){
+function testFunctionParam(myString){
         // ... nothing
 }
+
+/**
+ * @return {String} - super string
+ */
+function testFunctionReturn(value){
+        return value
+}
 `
+
+//////////////////////////////////////////////////////////////////////////////
+//              Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
 
 var babel = require("babel-core")
 var result = babel.transform(code, {
@@ -16,10 +28,14 @@ eval(result.code)
 
 // console.log('code', result.code)
 
-describe('arguments type function declaration', function() {
+//////////////////////////////////////////////////////////////////////////////
+//              Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+describe('Function declaration: arguments type', function() {
         it('should work with a string argument', function () {
                 try {
-                        myFunctionDeclaration('ddd')
+                        testFunctionParam('ddd')
                 }catch(e){
                         console.assert(false)
                 }
@@ -27,7 +43,7 @@ describe('arguments type function declaration', function() {
         it('should fail with a number argument', function () {
                 var failed = false
                 try {
-                        myFunctionDeclaration(3)
+                        testFunctionParam(3)
                 }catch(e){
                         failed = true
                 }
@@ -36,7 +52,7 @@ describe('arguments type function declaration', function() {
         it('should fail with a Object argument', function () {
                 var failed = false
                 try {
-                        myFunctionDeclaration({})
+                        testFunctionParam({})
                 }catch(e){
                         failed = true
                 }
@@ -45,7 +61,48 @@ describe('arguments type function declaration', function() {
         it('should fail with no argument', function () {
                 var failed = false
                 try {
-                        myFunctionDeclaration()
+                        testFunctionParam()
+                }catch(e){
+                        failed = true
+                }
+                console.assert(failed === true)
+        });
+});
+
+//////////////////////////////////////////////////////////////////////////////
+//              Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+describe('Function declaration: return type', function() {
+        it('should work with a string return value', function () {
+                try {
+                        testFunctionReturn('ddd')
+                }catch(e){
+                        console.assert(false)
+                }
+        });
+        it('should fail with a number return', function () {
+                var failed = false
+                try {
+                        testFunctionReturn(3)
+                }catch(e){
+                        failed = true
+                }
+                console.assert(failed === true)
+        });
+        it('should fail with a Object return', function () {
+                var failed = false
+                try {
+                        testFunctionReturn({})
+                }catch(e){
+                        failed = true
+                }
+                console.assert(failed === true)
+        });
+        it('should fail with no return value', function () {
+                var failed = false
+                try {
+                        testFunctionReturn()
                 }catch(e){
                         failed = true
                 }

@@ -16,7 +16,7 @@ eval(result.code)
 
 // console.log('code', result.code)
 
-describe('arguments type function declaration', function() {
+describe('Function expression: arguments type', function() {
         it('should work with a string argument', function () {
                 try {
                         myFunctionExpression('ddd')
