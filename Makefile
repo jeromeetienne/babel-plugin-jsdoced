@@ -1,3 +1,6 @@
+sample-es6-testbed:
+	babel --presets=es2015 --plugins ../babel-jsdoced.js ./examples/sample-es6-testbed.js
+
 sample-es6-arrowfunction-implicitreturn:
 	babel --plugins ../babel-jsdoced.js ./examples/sample-es6-arrowfunction-implicitreturn.js
 
