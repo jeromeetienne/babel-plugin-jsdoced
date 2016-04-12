@@ -128,13 +128,12 @@ module.exports = function(babel) {
                         var block = paramTemplate()
                         nodeFunctionBody.unshift(block);
                 }
-                
+
                 //////////////////////////////////////////////////////////////////////////////////
                 //                Comments
                 //////////////////////////////////////////////////////////////////////////////////
 
                 // TODO to trap the return, do a visitor to get the return at the root of the function
-                // 
                 var visitorReturn = {
                         ReturnStatement : function(path){
                                 console.error('ReturnStatement')

@@ -6,6 +6,7 @@
  */
 function myFunctionDeclaration(myString1, myString2){
         console.log('now is', new Date())
+        if( true ) return 'food'
         return myString1+myString1+'---'+myString2;
 }
 

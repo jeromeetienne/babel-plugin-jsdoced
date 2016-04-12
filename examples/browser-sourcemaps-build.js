@@ -11,11 +11,16 @@ function myFunctionDeclaration(myString1, myString2) {
   }
 
   console.log('now is', new Date());
+  if (true) {
+      var _returnValue = 'food';
+      console.assert(typeof _returnValue === 'number' || typeof _returnValue === 'string', "Invalid type for return value");
+      return _returnValue;
+    }
   {
-    var _returnValue = myString1 + myString1 + '---' + myString2;
+    var _returnValue2 = myString1 + myString1 + '---' + myString2;
 
-    console.assert(typeof _returnValue === 'number' || typeof _returnValue === 'string', "Invalid type for return value");
-    return _returnValue;
+    console.assert(typeof _returnValue2 === 'number' || typeof _returnValue2 === 'string', "Invalid type for return value");
+    return _returnValue2;
   }
 }
 
