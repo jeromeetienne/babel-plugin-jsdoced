@@ -55,7 +55,7 @@ module.exports = function(babel) {
 			},
 
                         FunctionDeclaration : function(path) {
-                                console.error("FunctionDeclaration HERE")
+                                // console.error("FunctionDeclaration HERE")
                                 // // console.error(path.node.body.body)
                                 var nodeFunctionBody = path.node.body.body
                                 
@@ -63,10 +63,10 @@ module.exports = function(babel) {
                         },
 
                         ArrowFunctionExpression : function(path){
-                                console.log('ArrowFunctionExpression HERE', path.node)
+                                // console.log('ArrowFunctionExpression HERE', path.node)
 
                                 // Handle the implicit return case
-                                // - modify ```() = 'foo'``` into ```() => { return 'foo' }```
+                                // - modify ```() => 'foo'``` into ```() => { return 'foo' }```
                                 // - then apply the usual return rules
                                 if( path.node.body.type !== 'BlockStatement' ){
                                         var code = '{return EXPRESSION;}'
@@ -90,7 +90,7 @@ module.exports = function(babel) {
                         },
 
                         FunctionExpression : function(path) {
-                                console.error("FunctionExpression HERE", path.node.loc.start.line)
+                                // console.error("FunctionExpression HERE", path.node.loc.start.line)
                                 var nodeFunctionBody = path.parent.init.body.body
 
                                 processFunction(path, nodeFunctionBody)
@@ -111,7 +111,7 @@ module.exports = function(babel) {
                 var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
         	// if no jsdocJson, do nothing
         	if( jsdocJson === null )	return
-                console.error('found jsdoc', jsdocJson)
+                // console.error('found jsdoc', jsdocJson)
 
                 //////////////////////////////////////////////////////////////////////////////////
                 //                Comments
