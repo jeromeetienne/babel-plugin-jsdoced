@@ -1,3 +1,9 @@
+sample-es6-arrowfunction-implicitreturn:
+	babel --plugins ../babel-jsdoced.js ./examples/sample-es6-arrowfunction-implicitreturn.js
+
+sample-es6-arrowfunction-explicitreturn:
+	babel --plugins ../babel-jsdoced.js ./examples/sample-es6-arrowfunction-explicitreturn.js
+
 sample-functiondeclaration:
 	babel --plugins ../babel-jsdoced.js ./examples/sample-functiondeclaration.js
 

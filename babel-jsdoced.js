@@ -61,13 +61,27 @@ module.exports = function(babel) {
 
                         ArrowFunctionExpression : function(path){
                                 console.log('ArrowFunctionExpression HERE', path.node)
+
+                                // Handle the implicit return case
+                                // - modify ```() = 'foo'``` into ```() => { return 'foo' }```
+                                // - then apply the usual return rules
+                                if( path.node.body.type !== 'BlockStatement' ){
+                                        var code = '{return EXPRESSION;}'
+                                        var implicitReturnTemplate = babel.template(code);
+                                        var block = implicitReturnTemplate({
+                                                EXPRESSION : path.node.body
+                                        })
+                                        path.node.body = block;
+                                }
                                 
                                 // detect the implicit return case
                                 // LATER - convert that into BlockStatement with a return. rewrite it with a template ?
                                 // => expression is the same as => { return expression }
                                 // so rewrite it and then go in the normal case
-                                if( path.node.body.type !== 'BlockStatement' ) return
+                                // if( path.node.body.type !== 'BlockStatement' ) return
 
+                                console.assert(path.node.body.type === 'BlockStatement')
+                                
                                 var nodeFunctionBody = path.node.body.body
                                 processFunction(path, nodeFunctionBody)
                         },
@@ -104,7 +118,7 @@ module.exports = function(babel) {
                         Object.keys(jsdocJson.params).forEach(function(varName){
                                 var param = jsdocJson.params[varName]
                                 var conditionString = types2Conditions(param.type, varName);
-                                code += '\tconsole.assert('+conditionString+', "'+varName+' isnt of proper type");\n'
+                                code += '\tconsole.assert('+conditionString+', "Params '+varName+' isnt of proper type");\n'
                         })
                         code += '}\n'
                         var paramTemplate = babel.template(code);
