@@ -136,7 +136,7 @@ module.exports = function(babel) {
                 // TODO to trap the return, do a visitor to get the return at the root of the function
                 var visitorReturn = {
                         ReturnStatement : function(path){
-                                console.error('ReturnStatement')
+                                // console.error('ReturnStatement')
                 
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if (path.node[RETURN_MARKER]) return;
