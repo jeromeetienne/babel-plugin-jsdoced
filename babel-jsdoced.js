@@ -46,6 +46,14 @@ module.exports = function(babel) {
         var RETURN_MARKER = Symbol();
         return {
                 visitor: {
+
+                        Program(path, file) {
+                                // console.error('Program', file.file.code)
+
+                                // Store the content lines to parse the jsdoc
+                        	contentLines   = file.file.code.split('\n')
+			},
+
                         FunctionDeclaration : function(path) {
                                 console.error("FunctionDeclaration HERE")
                                 // // console.error(path.node.body.body)
@@ -53,11 +61,6 @@ module.exports = function(babel) {
                                 
                                 processFunction(path, nodeFunctionBody)
                         },
-
-                        Program(path, file) {
-                                // console.error('Program', file.file.code)
-                        	contentLines   = file.file.code.split('\n')
-			},
 
                         ArrowFunctionExpression : function(path){
                                 console.log('ArrowFunctionExpression HERE', path.node)

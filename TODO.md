@@ -1,4 +1,6 @@
-- see how it support es6
+- DONE check if the plugin name is the proper one
+- DONE see how it support es6
+- implement testing
 - see how it works in a browser
 - test the nested function with return value and jsdoc
   ```
@@ -11,7 +13,6 @@
 		})()
 	}
   ```
-
 
 ## ES2015 Support
 - see with the arrow Function
