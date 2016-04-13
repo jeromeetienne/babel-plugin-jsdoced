@@ -44,8 +44,10 @@ module.exports = function(babel) {
         
         // to detect infinite traverse on returnStatement
         var RETURN_MARKER = Symbol();
+        var JSDOCJSON_MARKER = Symbol();
         return {
                 visitor: {
+
                         Program(path, file) {
                                 // console.error('Program', file.file.code)
 
@@ -55,15 +57,9 @@ module.exports = function(babel) {
 
                         FunctionDeclaration : function(path) {
                                 // console.error("FunctionDeclaration HERE")
+                                // // console.error(path.node.body.body)
                                 var nodeFunctionBody = path.node.body.body
                                 
-                                processFunction(path, nodeFunctionBody)
-                        },
-
-                        FunctionExpression : function(path) {
-                                // console.error("FunctionExpression HERE")
-                                var nodeFunctionBody = path.node.body.body
-
                                 processFunction(path, nodeFunctionBody)
                         },
 
@@ -93,71 +89,49 @@ module.exports = function(babel) {
                                 var nodeFunctionBody = path.node.body.body
                                 processFunction(path, nodeFunctionBody)
                         },
-                }
-        }
 
+                        FunctionExpression : function(path) {
+                                console.error("FunctionExpression HERE", path)
+                                // var nodeFunctionBody = path.node.body.body
+                                var nodeFunctionBody = path.parent.init.body.body
 
-        //////////////////////////////////////////////////////////////////////////////////
-        //                Comments
-        //////////////////////////////////////////////////////////////////////////////////
-        function processFunction(path, nodeFunctionBody){
-                var functionPath = path
-                //////////////////////////////////////////////////////////////////////////////////
-                //                Comments
-                //////////////////////////////////////////////////////////////////////////////////
-        	// get jsdocJson for this node
-                var lineNumber  = path.node.loc.start.line-1
-                var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
-        	// if no jsdocJson, do nothing
-        	if( jsdocJson === null )	return
-                // console.error('found jsdoc', jsdocJson)
-
-                //////////////////////////////////////////////////////////////////////////////////
-                //                Comments
-                //////////////////////////////////////////////////////////////////////////////////
-                if( jsdocJson.params ){
-                        var code = '{\n'
-                        Object.keys(jsdocJson.params).forEach(function(varName, index){
-                                var param = jsdocJson.params[varName]
-                                var conditionString = types2Conditions(param.type, varName);
-                                code += '\tconsole.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");\n'
-                        })
-                        code += '}\n'
-                        var paramTemplate = babel.template(code);
-                        var block = paramTemplate()
-                        nodeFunctionBody.unshift(block);
-                }
-
-                //////////////////////////////////////////////////////////////////////////////////
-                //                Comments
-                //////////////////////////////////////////////////////////////////////////////////
-
-                // TODO to trap the return, do a visitor to get the return at the root of the function
-                var visitorReturn = {
+                                processFunction(path, nodeFunctionBody)
+                        },
+                        
+                        
                         ReturnStatement : function(path){
                                 // console.error('ReturnStatement', path.node)
-                                
-                                function getParentFunction(path){
-                                        for(var nodePath = path.parentPath; nodePath; nodePath = nodePath.parentPath ){
-                                                // console.error('node type', nodePath.node.type)
-                                                var isFunction = nodePath.node.type === 'FunctionDeclaration' 
-                                                        || nodePath.node.type === 'ArrowFunctionExpression'
-                                                        || nodePath.node.type === 'FunctionExpression'
-                                                if( isFunction )        return nodePath
-                                        }
-                                        return null
-                                }
-                                var parentFunction = getParentFunction(path)
-                                if( parentFunction !== functionPath ) return;
-                                // console.error('parentFunction', path)
-                                
+
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if (path.node[RETURN_MARKER]) return;
-                                
-                                
+
+
+                                // find the functionPath in the parents
+                                for(var functionPath = path.parentPath; functionPath; functionPath = functionPath.parentPath ){
+                                        // console.error('node type', functionPath.node.type)
+                                        // TODO here add any type of function... maybe there is a helper for that
+                                        var isFunction = functionPath.node.type === 'FunctionDeclaration' 
+                                                || functionPath.node.type === 'ArrowFunctionExpression'
+                                                || functionPath.node.type === 'FunctionExpression'
+                                        if( isFunction )        break
+                                }
+
+                                // if there is no parentFunction do nothing
+                                if( functionPath === null ) return
+                
+                                // if there is no jsdoc attached to this function, do nothing
+                                if( functionPath.node[JSDOCJSON_MARKER] === undefined ) return
+                
+                                var jsdocJson = functionPath.node[JSDOCJSON_MARKER]
+                                // console.log('function found', functionPath.node)
+                                console.log('JSDOCJSON_MARKER', functionPath.node[JSDOCJSON_MARKER])
+
+                                //////////////////////////////////////////////////////////////////////////////////
+                                //                Comments
+                                //////////////////////////////////////////////////////////////////////////////////
                                 var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
                                 var codeConditions = 'console.assert('+conditionString+', "Invalid type for return value");\n'
-
+                
                                 var codePrefix = `
                                         {
                                                 var VARNAME = (RETURN_EXPRESSION);
@@ -179,8 +153,43 @@ module.exports = function(babel) {
                                 block.body[block.body.length-1][RETURN_MARKER] = true;
                                 
                                 path.replaceWith(block);
-                        },
+                        }
                 }
-                if( jsdocJson.return ) path.traverse(visitorReturn);
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        //                Comments
+        //////////////////////////////////////////////////////////////////////////////////
+        function processFunction(path, nodeFunctionBody){
+                var functionPath = path
+                //////////////////////////////////////////////////////////////////////////////////
+                //                Comments
+                //////////////////////////////////////////////////////////////////////////////////
+        	// get jsdocJson for this node
+                var lineNumber  = path.node.loc.start.line-1
+                var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
+        	// if no jsdocJson, do nothing
+        	if( jsdocJson === null )	return
+                // console.error('found jsdoc', jsdocJson)
+
+                // store it in the tree - returnStatement uses it
+                path.node[JSDOCJSON_MARKER] = jsdocJson;
+
+                //////////////////////////////////////////////////////////////////////////////////
+                //                Comments
+                //////////////////////////////////////////////////////////////////////////////////
+                if( jsdocJson.params ){
+                        var code = '{\n'
+                        Object.keys(jsdocJson.params).forEach(function(varName, index){
+                                var param = jsdocJson.params[varName]
+                                var conditionString = types2Conditions(param.type, varName);
+                                code += '\tconsole.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");\n'
+                        })
+                        code += '}\n'
+                        var paramTemplate = babel.template(code);
+                        var block = paramTemplate()
+                        nodeFunctionBody.unshift(block);
+                }
         }
 }

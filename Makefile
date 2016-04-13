@@ -1,3 +1,6 @@
+sample-functionreturnnested:
+	babel --plugins ../babel-jsdoced.js ./examples/sample-functionreturnnested.js
+
 sample-es6-testbed:
 	babel --presets=es2015 --plugins ../babel-jsdoced.js ./examples/sample-es6-testbed.js
 
