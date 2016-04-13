@@ -1,3 +1,6 @@
+- test with es6 and with jsx
+- how to test on a large project ?
+- make a video ala crazy javascript guy
 - make a master branch which is working
   - so no return handling
   - aka put it on options and default to false

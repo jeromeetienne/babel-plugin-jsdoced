@@ -22,7 +22,7 @@ module.exports = {
 
 var babel = require("babel-core")
 var result = babel.transform(code, {
-        "presets": ["es2015"],
+        presets: ["es2015"],
         plugins: ["./babel-jsdoced.js"]
 });
 // eval the result
