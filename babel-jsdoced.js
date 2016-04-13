@@ -46,7 +46,6 @@ module.exports = function(babel) {
         var RETURN_MARKER = Symbol();
         return {
                 visitor: {
-
                         Program(path, file) {
                                 // console.error('Program', file.file.code)
 
@@ -56,9 +55,15 @@ module.exports = function(babel) {
 
                         FunctionDeclaration : function(path) {
                                 // console.error("FunctionDeclaration HERE")
-                                // // console.error(path.node.body.body)
                                 var nodeFunctionBody = path.node.body.body
                                 
+                                processFunction(path, nodeFunctionBody)
+                        },
+
+                        FunctionExpression : function(path) {
+                                // console.error("FunctionExpression HERE")
+                                var nodeFunctionBody = path.node.body.body
+
                                 processFunction(path, nodeFunctionBody)
                         },
 
@@ -88,13 +93,6 @@ module.exports = function(babel) {
                                 var nodeFunctionBody = path.node.body.body
                                 processFunction(path, nodeFunctionBody)
                         },
-
-                        FunctionExpression : function(path) {
-                                // console.error("FunctionExpression HERE", path.node.loc.start.line)
-                                var nodeFunctionBody = path.parent.init.body.body
-
-                                processFunction(path, nodeFunctionBody)
-                        },
                 }
         }
 
@@ -103,6 +101,7 @@ module.exports = function(babel) {
         //                Comments
         //////////////////////////////////////////////////////////////////////////////////
         function processFunction(path, nodeFunctionBody){
+                var functionPath = path
                 //////////////////////////////////////////////////////////////////////////////////
                 //                Comments
                 //////////////////////////////////////////////////////////////////////////////////
@@ -136,26 +135,45 @@ module.exports = function(babel) {
                 // TODO to trap the return, do a visitor to get the return at the root of the function
                 var visitorReturn = {
                         ReturnStatement : function(path){
-                                // console.error('ReturnStatement')
-                
+                                // console.error('ReturnStatement', path.node)
+                                
+                                function getParentFunction(path){
+                                        for(var nodePath = path.parentPath; nodePath; nodePath = nodePath.parentPath ){
+                                                // console.error('node type', nodePath.node.type)
+                                                var isFunction = nodePath.node.type === 'FunctionDeclaration' 
+                                                        || nodePath.node.type === 'ArrowFunctionExpression'
+                                                        || nodePath.node.type === 'FunctionExpression'
+                                                if( isFunction )        return nodePath
+                                        }
+                                        return null
+                                }
+                                var parentFunction = getParentFunction(path)
+                                if( parentFunction !== functionPath ) return;
+                                // console.error('parentFunction', path)
+                                
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if (path.node[RETURN_MARKER]) return;
                                 
-                                var code = `
-                                        {
-                                                var VARNAME = (RETURN_VALUE);
-                                                `
+                                
                                 var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
-                                code += 'console.assert('+conditionString+', "Invalid type for return value");\n'
-                                code += `
+                                var codeConditions = 'console.assert('+conditionString+', "Invalid type for return value");\n'
+
+                                var codePrefix = `
+                                        {
+                                                var VARNAME = (RETURN_EXPRESSION);
+                                                `
+                                var codeSuffix =  `
                                                 return VARNAME;
                                         }
                                 `
+                                var code = codePrefix + codeConditions +codeSuffix
                                 var returnTemplate = babel.template(code);
                 
                                 var block = returnTemplate({
+                                        // To store the value during the assertions 
                                         VARNAME : path.scope.generateUidIdentifier("returnValue"),
-                                        RETURN_VALUE : path.node.argument,
+                                        // To reinsert the returned value from original expression
+                                        RETURN_EXPRESSION : path.node.argument,
                                 });
                                 // mark the return at the end as 'alreadyProcessed'
                                 block.body[block.body.length-1][RETURN_MARKER] = true;

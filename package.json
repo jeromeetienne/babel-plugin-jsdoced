@@ -17,9 +17,10 @@
     "deku": "^1.0.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
+    "mocha": "^2.4.5"
   },
   "scripts": {
-    "test": "mocha test/test-*.js"
+    "test": "node_modules/.bin/mocha test/test-*.js"
   },
   "repository": {
     "type": "git",

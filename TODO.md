@@ -1,3 +1,17 @@
+- test with es6 and with jsx
+- how to test on a large project ?
+- make a video ala crazy javascript guy
+- make a master branch which is working
+  - so no return handling
+  - aka put it on options and default to false
+- intuition about return parsing. i like it
+  - put the visitor of return statement at the root level
+  - when finding a return, get the parent function, and see if there is a jsdocJson attached. use Symbol()
+  - when finding a symbol, process the parameters and store the jsdocJson 
+- this cause the parser to crash
+  ``` (function(){})()```
+  - FunctionExpression is not good. it seems to assume it is ```var foo = function(){}```
+---
 - DONE test arrow Function
   - with implicit return
   - with explicit return
