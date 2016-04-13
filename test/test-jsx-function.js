@@ -33,7 +33,7 @@ var result = babel.transform(code, {
         presets: ["react"],
         plugins: ["./babel-jsdoced.js"]
 });
-console.log('code', result.code)
+// console.log('code', result.code)
 // eval the result
 var evalResult = eval(result.code)
 var testFunctionParam = evalResult.testFunctionParam
