@@ -1,5 +1,5 @@
 sample-jsx-react:
-	babel --plugins transform-react-jsx,../babel-jsdoced.js ./examples/sample-jsx-react.jsx
+	babel --presets=react --plugins ../babel-jsdoced.js ./examples/sample-jsx-react.js
 
 sample-es6-testbed:
 	babel --presets=es2015 --plugins ../babel-jsdoced.js ./examples/sample-es6-testbed.js
