@@ -22,7 +22,7 @@ module.exports = {
 
 var babel = require("babel-core")
 var result = babel.transform(code, {
-        "presets": ["es2015"],
+        presets: ["es2015"],
         plugins: ["./babel-jsdoced.js"]
 });
 // eval the result
@@ -37,7 +37,7 @@ var testFunctionReturn = evalResult.testFunctionReturn
 //              Code Separator
 //////////////////////////////////////////////////////////////////////////////
 
-describe('Arrow Function: arguments type', function() {
+describe('ES6 Arrow Function: arguments type', function() {
         it('should work with a string argument', function () {
                 try {
                         testFunctionParam('ddd')
@@ -78,7 +78,7 @@ describe('Arrow Function: arguments type', function() {
 //              Code Separator
 //////////////////////////////////////////////////////////////////////////////
 
-describe('Arrow Function: return type', function() {
+describe('ES6 Arrow Function: return type', function() {
         it('should work with a string return value', function () {
                 try {
                         testFunctionReturn('ddd')
