@@ -2,9 +2,11 @@
 
 It implements the principle of [jsdoced javascript](http://jsdocedjs.org) as a babel plugin
 It implements strong typing for functions in javascript.
-The type of the function arguments and of the return value are checked. 
-It supports [es6 arrow functions](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions) too!
+The type of the function arguments and of the return value are checked according to your [jsdoc](http://usejsdoc.org/). 
+It is working in browser and node.js. it has source maps 
 
+On top of it it supports [es6 arrow functions](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions) too!
+If you use react, don't worry it works with jsx without trouble. 
 
 ## Installation
 
