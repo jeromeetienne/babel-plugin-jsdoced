@@ -21,7 +21,7 @@ function testFunctionReturn(value){
 
 var babel = require("babel-core")
 var result = babel.transform(code, {
-        plugins: ["./babel-jsdoced.js"]
+        plugins: ["./transform-jsdoced.js"]
 });
 // eval the result
 eval(result.code)

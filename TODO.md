@@ -10,7 +10,7 @@
   - use mocha
   - link with npm test
   - see about triggering github auto test
-- should i write a presets ?
+- should i write a presets ? es2015-jsdoced, react-jsdoced ... for configuration easyness ?
 - DONE clean up node_modules
 - DONE see how it works in a browser
 - DONE what about sourceMap
