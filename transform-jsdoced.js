@@ -116,16 +116,23 @@ module.exports = function(babel) {
                 //                Comments
                 //////////////////////////////////////////////////////////////////////////////////
                 if( jsdocJson.params ){
-                        var code = '{\n'
+                        var code = ''
                         Object.keys(jsdocJson.params).forEach(function(varName, index){
                                 var param = jsdocJson.params[varName]
                                 var conditionString = types2Conditions(param.type, varName);
-                                code += '\tconsole.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");\n'
+                                code += 'console.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");'
                         })
-                        code += '}\n'
+                        // console.log('code', code)
                         var paramTemplate = babel.template(code);
                         var block = paramTemplate()
-                        nodeFunctionBody.unshift(block);
+                        // console.dir(block)
+                        if( block instanceof Array ){
+                                while( block.length > 0 ){
+                                        nodeFunctionBody.unshift(block.pop())
+                                }
+                        }else{
+                                nodeFunctionBody.unshift(block);
+                        }
                 }
 
                 //////////////////////////////////////////////////////////////////////////////////
@@ -135,8 +142,8 @@ module.exports = function(babel) {
                 // TODO to trap the return, do a visitor to get the return at the root of the function
                 var visitorReturn = {
                         ReturnStatement : function(path){
-                                // console.error('ReturnStatement', path.node)
-                                
+                                console.error('ReturnStatement', path.parentPath.type)
+                                // return
                                 function getParentFunction(path){
                                         for(var nodePath = path.parentPath; nodePath; nodePath = nodePath.parentPath ){
                                                 // console.error('node type', nodePath.node.type)
@@ -158,15 +165,20 @@ module.exports = function(babel) {
                                 var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
                                 var codeConditions = 'console.assert('+conditionString+', "Invalid type for return value");\n'
 
-                                var codePrefix = `
-                                        {
-                                                var VARNAME = (RETURN_EXPRESSION);
-                                                `
-                                var codeSuffix =  `
-                                                return VARNAME;
-                                        }
-                                `
-                                var code = codePrefix + codeConditions +codeSuffix
+                                // generate code in string
+                                var code = ''
+                                code += 'var VARNAME = (RETURN_EXPRESSION);'
+                                code += codeConditions
+                                code += 'return VARNAME;'
+
+                                // add scope in case of if( condition ) return 2;
+                                // TODO get all the possible statement... ok which one... forStatement... how to get the list
+                                if( path.parentPath.type === 'IfStatement' ){
+                                        code = '{' + code + '}'
+                                }                                
+
+                                // code = '{' + code + '}'
+
                                 var returnTemplate = babel.template(code);
                 
                                 var block = returnTemplate({
@@ -176,9 +188,13 @@ module.exports = function(babel) {
                                         RETURN_EXPRESSION : path.node.argument,
                                 });
                                 // mark the return at the end as 'alreadyProcessed'
-                                block.body[block.body.length-1][RETURN_MARKER] = true;
-                                
-                                path.replaceWith(block);
+                                if( block instanceof Array ){
+                                        block[block.length-1][RETURN_MARKER] = true;                                        
+                                        path.replaceWithMultiple(block);                                        
+                                }else{
+                                        block.body[block.body.length-1][RETURN_MARKER] = true;                                
+                                        path.replaceWith(block);                                        
+                                }
                         },
                 }
                 if( jsdocJson.return ) path.traverse(visitorReturn);

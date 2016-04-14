@@ -1,7 +1,15 @@
-- DONE test with es6 and with jsx
-- how to test on a large project ?
-- make a video ala crazy javascript guy
+- BUG: following code make parser crash 
+  ```/**
+   * blabla
+   */
+  class Point {
+  }
+  ```
+
 ---
+- how to test on a large project ?
+---
+- DONE test with es6 and with jsx
 - DONE test arrow Function
   - with implicit return
   - with explicit return

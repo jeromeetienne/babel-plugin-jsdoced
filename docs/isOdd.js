@@ -1,8 +1,16 @@
 /**
  * Test if it is odd
  * @param {Number} n - my number
- * @return {Boolean} true if it is odd, false otherwise
  */
 function isOdd(n){
-	return n % 2 ? true : false
+	if( n % 2 ){
+		console.log(n+' is odd')		
+	}else{
+		console.log(n+' is even')
+	}
 }
+
+// Let's use this function
+isOdd(0)
+isOdd(1) 
+isOdd('foobar') 

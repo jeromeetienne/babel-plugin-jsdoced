@@ -1,9 +1,8 @@
-/**
- * Doubler
- * @param  {Number} v [description]
- * @return {Number}   [description]
- */
-var slota = (v) => { return v * 2 }
-
-
-
+var a = {
+        /**
+         * [isOdd description]
+         * @param {Number} v [description]
+         * @return {Boolean} [description]
+         */
+        isOdd: function(v){ return v %2 ? true : false }
+}

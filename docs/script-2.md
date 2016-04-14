@@ -51,3 +51,11 @@ function isOdd(n){
 ```sh
 $ babel --plugins transform-jsdoced isOdd.js
 ```
+
+- now let try again to call it with a String
+
+```
+isOdd('foobar')	// => AssertionError: Invalid type for Params 0 n
+```
+
+- Cool no ?!?!
