@@ -1,6 +1,9 @@
 sample-jsx-react:
 	babel --presets=react --plugins ../transform-jsdoced.js ./examples/sample-jsx-react.js
 
+sample-es6-proxy:
+	node --harmony_proxies examples/sample-es6-proxy.js
+
 sample-functionreturnnested:
 	babel --plugins ../transform-jsdoced.js ./examples/sample-functionreturnnested.js
 

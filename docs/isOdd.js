@@ -4,7 +4,7 @@
  */
 function isOdd(n){
 	if( n % 2 ){
-		console.log(n+' is odd')		
+		console.log(n+' is odd')
 	}else{
 		console.log(n+' is even')
 	}
@@ -12,5 +12,5 @@ function isOdd(n){
 
 // Let's use this function
 isOdd(0)
-isOdd(1) 
-isOdd('foobar') 
+isOdd(1)
+isOdd('foobar')
