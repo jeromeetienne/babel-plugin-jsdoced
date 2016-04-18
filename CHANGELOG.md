@@ -1,3 +1,6 @@
+# v1.2.1-dev
+- wrote example for eslint jsdoc - http://eslint.org/docs/rules/valid-jsdoc
+
 # v1.2.1
 - wrote test and examples for react jsx
 - wrote test and examples for es2015 arrow function
