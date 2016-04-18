@@ -1,7 +1,7 @@
 /**
- * @return {Number} sdfsd
+ * blabla
+ * @return {Number} - blsbls
  */
-function aFunction(){
-	// if( true ) 
-	return 1;
+function Point() {
+	return
 }

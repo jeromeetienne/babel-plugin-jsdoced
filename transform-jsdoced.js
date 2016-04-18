@@ -106,6 +106,7 @@ module.exports = function(babel) {
                 //                Comments
                 //////////////////////////////////////////////////////////////////////////////////
         	// get jsdocJson for this node
+        	console.log('node', path.node)
                 var lineNumber  = path.node.loc.start.line-1
                 var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
         	// if no jsdocJson, do nothing
@@ -173,11 +174,11 @@ module.exports = function(babel) {
 
                                 // add scope in case of if( condition ) return 2;
                                 // TODO get all the possible statement... ok which one... forStatement... how to get the list
-                                if( path.parentPath.type === 'IfStatement' ){
-                                        code = '{' + code + '}'
-                                }                                
+                                // if( path.parentPath.type === 'IfStatement' ){
+                                //         code = '{' + code + '}'
+                                // }                                
 
-                                // code = '{' + code + '}'
+                                code = '{' + code + '}'
 
                                 var returnTemplate = babel.template(code);
                 
@@ -187,6 +188,7 @@ module.exports = function(babel) {
                                         // To reinsert the returned value from original expression
                                         RETURN_EXPRESSION : path.node.argument,
                                 });
+
                                 // mark the return at the end as 'alreadyProcessed'
                                 if( block instanceof Array ){
                                         block[block.length-1][RETURN_MARKER] = true;                                        

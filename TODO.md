@@ -1,3 +1,5 @@
+- TODO complete the clean return
+  - what about the following rules. if parent got a single child. 
 - BUG: following code make parser crash 
   ```/**
    * blabla
@@ -5,7 +7,10 @@
   class Point {
   }
   ```
-
+- how to handle the function without return at all. aka the one returning undefined
+  - what if undefined is allowed ? what if undefined is not allowed ?
+- write something on how to use it with webpack
+  - Webpack plugin for Babel - https://github.com/babel/babel-loader
 ---
 - how to test on a large project ?
 ---
