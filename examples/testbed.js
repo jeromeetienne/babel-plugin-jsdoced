@@ -1,7 +1,7 @@
 /**
 * A description
-* @param {String} num1 - The first number.
+* @returns {Number} - a number
 */
-function foo(num1) {
-        // ...
+function foo() {
+        return 2
 }

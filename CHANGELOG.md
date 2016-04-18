@@ -1,5 +1,7 @@
 # v1.2.1-dev
 - wrote example for eslint jsdoc - http://eslint.org/docs/rules/valid-jsdoc
+- modify code generation to add block scope ```{}``` only when necessary
+  - useful mainly for return
 
 # v1.2.1
 - wrote test and examples for react jsx

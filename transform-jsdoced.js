@@ -1,5 +1,14 @@
 var jsdocParse	= require('./vendor/jsdocParse.js')
 
+var pluginOptions = {
+        /**
+         * true if the return should be scoped in a {} IIF necessary
+         * false if it should ALWAYS be scoped in a {}
+         * @type {Boolean}
+         */
+        minimalReturn : true,
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
 //////////////////////////////////////////////////////////////////////////////////
@@ -50,17 +59,14 @@ module.exports = function(babel) {
                                 // Store the content lines to parse the jsdoc
                         	contentLines   = file.file.code.split('\n')
 			},
-
                         FunctionDeclaration : function(path) {
                                 var nodeFunctionBody = path.node.body.body                                
                                 postProcessFunction(path, nodeFunctionBody)
                         },
-
                         FunctionExpression : function(path) {
                                 var nodeFunctionBody = path.node.body.body
                                 postProcessFunction(path, nodeFunctionBody)
                         },
-
                         ArrowFunctionExpression : function(path){
                                 // console.log('ArrowFunctionExpression HERE', path.node)
 
@@ -111,7 +117,7 @@ module.exports = function(babel) {
                                 var conditionString = types2Conditions(param.type, varName);
                                 code += 'console.assert('+conditionString+', "Invalid type for argument '+index+' '+varName+'");'
                         })
-                        // console.log('code', code)
+                        // code = '{' + code + '}'
                         var paramTemplate = babel.template(code);
                         var block = paramTemplate()
                         // insert the created block
@@ -131,7 +137,7 @@ module.exports = function(babel) {
                 // TODO to trap the return, do a visitor to get the return at the root of the function
                 var visitorReturn = {
                         ReturnStatement : function(path){
-                                console.error('ReturnStatement', path.parentPath.type)
+                                // console.error('ReturnStatement', path.parentPath.type)
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if (path.node[RETURN_MARKER]) return;
 
@@ -160,13 +166,15 @@ module.exports = function(babel) {
                                 code += codeConditions
                                 code += 'return VARNAME;'
 
-                                // add scope in case of if( condition ) return 2;
-                                // TODO get all the possible statement... ok which one... forStatement... how to get the list
-                                if( path.parentPath.type === 'IfStatement' ){
+                                if( pluginOptions.minimalReturn === true ){
+                                        // add scope in case of if( condition ) return 2;
+                                        if( path.parentPath.type !== 'BlockStatement' ){
+                                                code = '{' + code + '}'
+                                        }                                        
+                                }else{
                                         code = '{' + code + '}'
-                                }                                
+                                }
 
-                                // code = '{' + code + '}'
 
                                 var returnTemplate = babel.template(code);
                 
