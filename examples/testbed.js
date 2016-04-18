@@ -1,7 +1,7 @@
 /**
- * @return {Number} sdfsd
- */
-function aFunction(){
-	// if( true ) 
-	return 1;
+* A description
+* @param {String} num1 - The first number.
+*/
+function foo(num1) {
+        // ...
 }

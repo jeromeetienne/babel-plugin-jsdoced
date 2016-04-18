@@ -40,31 +40,25 @@ function types2Conditions(type, varName){
 module.exports = function(babel) {
         var t = babel.types
 	var contentLines;
-        // console.error('Loading my babel plugin')
         
         // to detect infinite traverse on returnStatement
         var RETURN_MARKER = Symbol();
+
         return {
                 visitor: {
                         Program(path, file) {
-                                // console.error('Program', file.file.code)
-
                                 // Store the content lines to parse the jsdoc
                         	contentLines   = file.file.code.split('\n')
 			},
 
                         FunctionDeclaration : function(path) {
-                                // console.error("FunctionDeclaration HERE")
-                                var nodeFunctionBody = path.node.body.body
-                                
-                                processFunction(path, nodeFunctionBody)
+                                var nodeFunctionBody = path.node.body.body                                
+                                postProcessFunction(path, nodeFunctionBody)
                         },
 
                         FunctionExpression : function(path) {
-                                // console.error("FunctionExpression HERE")
                                 var nodeFunctionBody = path.node.body.body
-
-                                processFunction(path, nodeFunctionBody)
+                                postProcessFunction(path, nodeFunctionBody)
                         },
 
                         ArrowFunctionExpression : function(path){
@@ -81,17 +75,12 @@ module.exports = function(babel) {
                                         })
                                         path.node.body = block;
                                 }
-                                
-                                // detect the implicit return case
-                                // LATER - convert that into BlockStatement with a return. rewrite it with a template ?
-                                // => expression is the same as => { return expression }
-                                // so rewrite it and then go in the normal case
-                                // if( path.node.body.type !== 'BlockStatement' ) return
-
+                                // sanity check - 
                                 console.assert(path.node.body.type === 'BlockStatement')
                                 
+                                // call postProcessFunction
                                 var nodeFunctionBody = path.node.body.body
-                                processFunction(path, nodeFunctionBody)
+                                postProcessFunction(path, nodeFunctionBody)
                         },
                 }
         }
@@ -100,7 +89,7 @@ module.exports = function(babel) {
         //////////////////////////////////////////////////////////////////////////////////
         //                Comments
         //////////////////////////////////////////////////////////////////////////////////
-        function processFunction(path, nodeFunctionBody){
+        function postProcessFunction(path, nodeFunctionBody){
                 var functionPath = path
                 //////////////////////////////////////////////////////////////////////////////////
                 //                Comments
@@ -113,19 +102,19 @@ module.exports = function(babel) {
                 // console.error('found jsdoc', jsdocJson)
 
                 //////////////////////////////////////////////////////////////////////////////////
-                //                Comments
+                //                handle jsdocs params
                 //////////////////////////////////////////////////////////////////////////////////
                 if( jsdocJson.params ){
                         var code = ''
                         Object.keys(jsdocJson.params).forEach(function(varName, index){
                                 var param = jsdocJson.params[varName]
                                 var conditionString = types2Conditions(param.type, varName);
-                                code += 'console.assert('+conditionString+', "Invalid type for Params '+index+' '+varName+'");'
+                                code += 'console.assert('+conditionString+', "Invalid type for argument '+index+' '+varName+'");'
                         })
                         // console.log('code', code)
                         var paramTemplate = babel.template(code);
                         var block = paramTemplate()
-                        // console.dir(block)
+                        // insert the created block
                         if( block instanceof Array ){
                                 while( block.length > 0 ){
                                         nodeFunctionBody.unshift(block.pop())
@@ -143,7 +132,10 @@ module.exports = function(babel) {
                 var visitorReturn = {
                         ReturnStatement : function(path){
                                 console.error('ReturnStatement', path.parentPath.type)
-                                // return
+                                // When processing the 'return' path, mark it so you know you've processed it.
+                                if (path.node[RETURN_MARKER]) return;
+
+                                // Get the parent function
                                 function getParentFunction(path){
                                         for(var nodePath = path.parentPath; nodePath; nodePath = nodePath.parentPath ){
                                                 // console.error('node type', nodePath.node.type)
@@ -157,9 +149,6 @@ module.exports = function(babel) {
                                 var parentFunction = getParentFunction(path)
                                 if( parentFunction !== functionPath ) return;
                                 // console.error('parentFunction', path)
-                                
-                                // When processing the 'return' path, mark it so you know you've processed it.
-                                if (path.node[RETURN_MARKER]) return;
                                 
                                 
                                 var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
