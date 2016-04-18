@@ -2,7 +2,7 @@ sample-jsx-react:
 	babel --presets=react --plugins ../transform-jsdoced.js ./examples/sample-jsx-react.js
 
 sample-eslint-jsdoc:
-	eslint --rule '{valid-jsdoc:"error"}' examples/sample-eslint-jsdoc.js
+	eslint --rule '{valid-jsdoc:["error", {"requireReturn": false}]}' examples/sample-eslint-jsdoc.js
 
 sample-es6-proxy:
 	node --harmony_proxies examples/sample-es6-proxy.js
