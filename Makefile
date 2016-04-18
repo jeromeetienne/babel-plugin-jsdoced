@@ -1,6 +1,9 @@
 sample-jsx-react:
 	babel --presets=react --plugins ../transform-jsdoced.js ./examples/sample-jsx-react.js
 
+sample-eslint-jsdoc:
+	eslint examples/sample-eslint-jsdoc.js
+
 sample-es6-proxy:
 	node --harmony_proxies examples/sample-es6-proxy.js
 
