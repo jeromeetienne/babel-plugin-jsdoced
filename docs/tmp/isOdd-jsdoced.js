@@ -1,6 +1,6 @@
 /**
- * test if it is odd
- * @param {Number} n - a number
+ * test if a number is odd or even
+ * @param {Number} n - value to test
  */
 function isOdd(n) {
 	{
@@ -14,7 +14,8 @@ function isOdd(n) {
 	}
 }
 
-// Now lets use this function
+// Let's check this function with valid arguments
 isOdd(0);
 isOdd(1);
+// Now let's check an invalid argument with a string.
 isOdd('foo');

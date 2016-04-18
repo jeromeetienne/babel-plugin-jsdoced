@@ -1,5 +1,6 @@
 var jsdocParse	= require('./vendor/jsdocParse.js')
 
+// @TODO should i expose this as actual plugin option, settable from babel
 var pluginOptions = {
         /**
          * true if the return should be scoped in a {} IIF necessary
@@ -84,7 +85,7 @@ module.exports = function(babel) {
                                 // sanity check - 
                                 console.assert(path.node.body.type === 'BlockStatement')
                                 
-                                // call postProcessFunction
+                                // call postProcessFunction - for usual return rule
                                 var nodeFunctionBody = path.node.body.body
                                 postProcessFunction(path, nodeFunctionBody)
                         },
