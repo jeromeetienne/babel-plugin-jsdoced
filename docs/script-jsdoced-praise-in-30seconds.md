@@ -1,5 +1,6 @@
 # Script praise
-- Pure javascript - works in node.js and browser
+- works in node.js and browser
+- no dependancies
 - support source maps
-- works with new es6 arrow function
 - works with es2015 and react/jsx
+- even works with new es6 arrow function
