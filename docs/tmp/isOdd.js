@@ -9,9 +9,3 @@ function isOdd(n){
 		console.log(n, 'is even')
 	}
 }
-
-// Let's check this function with valid arguments
-isOdd(0)
-isOdd(1)
-// Now let's check an invalid argument with a string.
-isOdd('foo')
