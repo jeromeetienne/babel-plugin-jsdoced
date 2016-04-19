@@ -33,6 +33,15 @@ $ npm install babel-plugin-transform-jsdoced
 }
 ```
 
+With es6
+
+```js
+{
+  "presets": ["es2015"],
+  "plugins": ["transform-jsdoced"]
+}
+```
+
 ### Via CLI
 
 ```sh

@@ -1,6 +1,7 @@
 /**
 * A description
-* @param {String} num1 - The first number.
+* @param {Number} num1 - The first number.
+* @return {Number} returned value
 */
 function foo(num1) {
         // ...
