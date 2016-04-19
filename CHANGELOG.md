@@ -1,7 +1,13 @@
-# v1.2.1-dev
+# v1.2.4-dev
+
+Nothing Yet...
+
+# v1.2.3
 - wrote example for eslint jsdoc - http://eslint.org/docs/rules/valid-jsdoc
-- modify code generation to add block scope ```{}``` only when necessary
-  - useful mainly for return
+- wrote example for .babelrc
+- clean up code generation 
+  - only to add block scope ```{}``` only when necessary
+  - useful mainly for return e.g. ```if(cond) return true;```
 
 # v1.2.1
 - wrote test and examples for react jsx
