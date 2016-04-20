@@ -8,8 +8,6 @@ function myFunctionDeclaration(myString1, myString2) {
   console.assert(typeof myString1 === 'string', "Invalid type for argument 0 myString1");
   console.assert(typeof myString2 === 'string', "Invalid type for argument 1 myString2");
 
-  console.log('hello');
-
   var _returnValue = myString1 + myString2;
 
   console.assert(typeof _returnValue === 'string', "Invalid type for return value");

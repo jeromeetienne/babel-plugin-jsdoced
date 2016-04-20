@@ -14,7 +14,7 @@ Nothing Yet...
 - wrote test and examples for es2015 arrow function
 
 # v1.1.0
-- wrote a testsuite with mocha
+- wrote a test suite with mocha
 - support for es2015 arrow function
 
 # v1.0.0

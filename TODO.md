@@ -7,8 +7,9 @@
   class Point {
   }
   ```
-- how to handle the function without return at all. aka the one returning undefined
+- DONE how to handle the function without return at all. aka the one returning undefined
   - what if undefined is allowed ? what if undefined is not allowed ?
+  - ANSWER: let eslint handle it.
 - write something on how to use it with webpack
   - Webpack plugin for Babel - https://github.com/babel/babel-loader
 ---
