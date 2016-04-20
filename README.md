@@ -15,6 +15,7 @@ Check it out!
 Here is a [Youtube video "JSDoced JS in 1min"](https://youtu.be/W-cdPCNxNJ8), it worth the whole minute :)
 
 or in a single image
+
 ![jsdoced javascript in a single image](https://cloud.githubusercontent.com/assets/252962/14639163/e53f682a-0632-11e6-9a06-33b577118e53.jpg)
 
 
