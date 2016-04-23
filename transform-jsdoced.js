@@ -102,7 +102,7 @@ module.exports = function(babel) {
                 //                Comments
                 //////////////////////////////////////////////////////////////////////////////////
         	// get jsdocJson for this node
-        	console.log('node', path.node)
+        	// console.log('node', path.node)
                 var lineNumber  = path.node.loc.start.line-1
                 var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
         	// if no jsdocJson, do nothing

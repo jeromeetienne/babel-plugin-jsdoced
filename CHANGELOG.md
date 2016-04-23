@@ -1,6 +1,6 @@
-# v1.2.4-dev
+# v1.2.4
 
-Nothing Yet...
+- removed silly debug log
 
 # v1.2.3
 - wrote example for eslint jsdoc - http://eslint.org/docs/rules/valid-jsdoc
