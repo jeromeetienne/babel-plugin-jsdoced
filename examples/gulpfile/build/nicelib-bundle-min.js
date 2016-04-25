@@ -1,0 +1,1 @@
+function isOdd(d){d%2?console.log(d+" is odd"):console.log(d+" is even")}isOdd(0),isOdd(1),isOdd("foobar");

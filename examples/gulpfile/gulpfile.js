@@ -1,20 +1,6 @@
 /**
- * Example of gulpfile.js
+ * Example of gulpfile.js 
  */
-
-/**
- * @TODO move the build embedded assets to a /bin
- * @TODO find what is contained in four.js dist
- * @TODO try to see if you can produce a -debug.js with eslint + jsdoced and sourcemap
- * @TODO try with webpack
- *
- * ## /build
- * - four.js
- * - four-debug.js
- * - four-min.js
- */
-
-'use strict';
 
 var gulp = require('gulp');
 var babel = require('gulp-babel');
@@ -29,6 +15,9 @@ var fileNames = [
 	'./src/isOdd.js',
 ]
 
+
+gulp.task('default', ['build-everything']);
+gulp.task('build-everything', ['build-bundle', 'build-debug', 'build-minify']);
 
 gulp.task('build-bundle', function() {
 	gulp.src(fileNames)
@@ -56,7 +45,7 @@ gulp.task('build-debug', function() {
 
 gulp.task('build-minify', function() {
 	gulp.src(fileNames)
-		.pipe(concat('nicelib.js'))
+		.pipe(concat('nicelib-bundle.js'))
 		.pipe(minify())
 		.pipe(gulp.dest('build'))
 });
