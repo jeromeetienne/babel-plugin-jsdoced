@@ -16,14 +16,17 @@ var fileNames = [
 ]
 
 
-gulp.task('default', ['build-everything']);
-gulp.task('build-everything', ['build-bundle', 'build-debug', 'build-minify']);
+gulp.task('default', ['build-everything'])
+gulp.task('build-everything', ['build-plain', 'build-debug', 'build-minify'])
 
-gulp.task('build-bundle', function() {
+//////////////////////////////////////////////////////////////////////////////////
+//		Comments
+//////////////////////////////////////////////////////////////////////////////////
+gulp.task('build-plain', function() {
 	gulp.src(fileNames)
-		.pipe(concat('nicelib-bundle.js'))
+		.pipe(concat('nicelib.js'))
 		.pipe(gulp.dest('build'))
-});
+})
 
 gulp.task('build-debug', function() {
 	gulp.src(fileNames)
@@ -41,11 +44,11 @@ gulp.task('build-debug', function() {
 		.pipe(concat('nicelib-debug.js'))
                 .pipe(eslint.failOnError())        // Brick on failure to be super strict
 		.pipe(gulp.dest('build'))
-});
+})
 
 gulp.task('build-minify', function() {
 	gulp.src(fileNames)
-		.pipe(concat('nicelib-bundle.js'))
+		.pipe(concat('nicelib.js'))
 		.pipe(minify())
 		.pipe(gulp.dest('build'))
-});
+})
