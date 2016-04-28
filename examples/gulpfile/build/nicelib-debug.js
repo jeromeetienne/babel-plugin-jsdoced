@@ -18,3 +18,4 @@ function isOdd(n) {
 isOdd(0);
 isOdd(1);
 isOdd('foobar');
+//# sourceMappingURL=nicelib-debug.js.map

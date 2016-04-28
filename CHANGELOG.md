@@ -1,6 +1,7 @@
 # v1.2.5-dev
 
-Nothing yet
+- added examples for eslintrc 
+- added gulpfile examples 
 
 # v1.2.4
 - removed silly debug log

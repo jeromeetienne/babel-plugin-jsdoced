@@ -9,7 +9,7 @@ var minify = require('gulp-minify');
 var filter = require('gulp-filter');
 var notify = require('gulp-notify');
 var eslint = require('gulp-eslint');
-
+var sourcemaps = require('gulp-sourcemaps');
 
 var fileNames = [
 	'./src/isOdd.js',
@@ -30,7 +30,7 @@ gulp.task('build-plain', function() {
 
 gulp.task('build-debug', function() {
 	gulp.src(fileNames)
-                // .pipe(notify("Found file: <%= file.relative %>!"))
+                .pipe(sourcemaps.init())
                 .pipe(eslint({
                         rules: {
                                 "valid-jsdoc": ["error", {"requireReturn": false}]
@@ -43,6 +43,7 @@ gulp.task('build-debug', function() {
 		}))
 		.pipe(concat('nicelib-debug.js'))
                 .pipe(eslint.failOnError())        // Brick on failure to be super strict
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('build'))
 })
 
@@ -50,5 +51,14 @@ gulp.task('build-minify', function() {
 	gulp.src(fileNames)
 		.pipe(concat('nicelib.js'))
 		.pipe(minify())
+		.pipe(gulp.dest('build'))
+})
+
+gulp.task('build-jsdoced', function() {
+	gulp.src(fileNames)
+		.pipe(babel({
+			plugins : ['transform-jsdoced'],
+		}))
+		.pipe(concat('nicelib-jsdoced.js'))
 		.pipe(gulp.dest('build'))
 })

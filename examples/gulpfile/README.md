@@ -9,6 +9,8 @@ This gulpfile.js will build 3 versions of the library:
 - nicelib-min.js - the library minified, good for production
 
 
+
+
 ### Notes on eslint
 It makes clever use of eslint during the build-debug process. 
 It will use [eslint-jsdoc](http://eslint.org/docs/rules/valid-jsdoc)
