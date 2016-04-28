@@ -9,7 +9,7 @@ It is working in browser and node.js. it has source maps.
 On top of it it supports [es6 arrow functions](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions) too!
 If you use react, don't worry it works with jsx without trouble. 
 
-Check it out! 
+Check it out! [How to install it](https://github.com/jeromeetienne/babel-plugin-transform-jsdoced#installation)
 
 ## What is JSDoced Javascript ?
 Here is a [Youtube video "JSDoced JS in 1min"](https://youtu.be/W-cdPCNxNJ8), it worth the whole minute :)
