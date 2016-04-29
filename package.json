@@ -2,7 +2,7 @@
   "name": "babel-plugin-jsdoced",
   "version": "1.2.4",
   "description": "It implements jsdoced javascript as a babel plugin",
-  "main": "plugin-jsdoced.js",
+  "main": "plugin-jsdoced-function.js",
   "directories": {
     "example": "examples"
   },

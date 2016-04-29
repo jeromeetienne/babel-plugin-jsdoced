@@ -31,7 +31,7 @@ module.exports = {
 var babel = require("babel-core")
 var result = babel.transform(code, {
         presets: ["react"],
-        plugins: ["./plugin-jsdoced.js"]
+        plugins: ["./plugin-jsdoced-function.js"]
 });
 // console.log('code', result.code)
 // eval the result
