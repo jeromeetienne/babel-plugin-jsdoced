@@ -1,6 +1,6 @@
-- to rename babel-plugin-jsdoced. simpler to read, and type.
+- DONE to rename babel-plugin-jsdoced. simpler to read, and type.
 - implement travis tests - https://github.com/babel/babel/blob/master/README.md
-- generate console.assert or throw on options
+- DONE generate console.assert or throw on options
 - test with property and proxy
   - create another plugin, and use it only in the makefile for now
   - plugin-jsdoced-property.js

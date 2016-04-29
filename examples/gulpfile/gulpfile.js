@@ -38,7 +38,7 @@ gulp.task('build-debug', function() {
                 }))
                 .pipe(eslint.format())
 		.pipe(babel({
-			plugins : ['transform-jsdoced'],
+			plugins : ['jsdoced'],
                         compact : false
 		}))
 		.pipe(concat('nicelib-debug.js'))
@@ -57,7 +57,7 @@ gulp.task('build-minify', function() {
 gulp.task('build-jsdoced', function() {
 	gulp.src(fileNames)
 		.pipe(babel({
-			plugins : ['transform-jsdoced'],
+			plugins : ['jsdoced'],
 		}))
 		.pipe(concat('nicelib-jsdoced.js'))
 		.pipe(gulp.dest('build'))
