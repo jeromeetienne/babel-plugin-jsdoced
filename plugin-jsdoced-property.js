@@ -1,5 +1,6 @@
 var jsdocParse	= require('./vendor/jsdocParse.js')
 
+// check https://github.com/jeromeetienne/jsdoced.js/blob/master/libs/processFile.js#L97
 
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
