@@ -1,7 +1,3 @@
-/**
-* A description
-* @returns {Number} - a number
-*/
-function foo() {
-        return 2
-}
+var foo = {}
+
+// foo.bar = 1

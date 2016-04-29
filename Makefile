@@ -1,6 +1,9 @@
 sample-jsx-react:
 	babel --presets=react --plugins ../plugin-jsdoced.js ./examples/sample-jsx-react.js
 
+sample-jsx-react:
+	babel --presets=react --plugins ../plugin-jsdoced.js ./examples/sample-jsx-react.js
+
 sample-eslint-jsdoc:
 	eslint --rule '{valid-jsdoc:["error", {"requireReturn": false}]}' examples/sample-eslint-jsdoc.js
 
@@ -10,9 +13,8 @@ sample-es6-proxy:
 sample-functionreturnnested:
 	babel --plugins ../plugin-jsdoced.js ./examples/sample-functionreturnnested.js
 
-sample-es6-testbed:
-	#babel --presets=es2015 ./examples/sample-es6-testbed.js
-	babel --presets=es2015 -plugins ../plugin-jsdoced.js ./examples/sample-es6-testbed.js
+sample-es2015:
+	babel --presets=es2015 -plugins ../plugin-jsdoced.js ./examples/sample-es2015.js
 
 sample-es6-arrowfunction-implicitreturn:
 	babel --plugins ../plugin-jsdoced.js ./examples/sample-es6-arrowfunction-implicitreturn.js

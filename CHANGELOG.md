@@ -1,11 +1,10 @@
 # v1.2.6-dev
-
 - implemented reporting error as exception optional
    - console.assert()
    - throw new TypeError()
+- started plugin-jsdoced-property...
 
 # v1.2.5
-
 - added examples for eslintrc 
 - added gulpfile examples 
 - renamed repo into babel-plugin-jsdoced
