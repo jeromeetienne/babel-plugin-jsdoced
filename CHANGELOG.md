@@ -1,6 +1,8 @@
 # v1.2.6-dev
 
-Nothing yet
+- implemented reporting error as exception optional
+   - console.assert()
+   - throw new TypeError()
 
 # v1.2.5
 

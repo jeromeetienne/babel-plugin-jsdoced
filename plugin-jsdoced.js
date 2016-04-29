@@ -3,37 +3,49 @@ var jsdocParse	= require('./vendor/jsdocParse.js')
 // @TODO should i expose this as actual plugin option, settable from babel
 var pluginOptions = {
         minimalReturn : true, // true if the return should be scoped in a {} IIF necessary
+        errorType : 'assert', // 'assert' to generate error as assert, 'exception' to generate error as exception
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
 //////////////////////////////////////////////////////////////////////////////////
-function types2Conditions(type, varName){
-        // console.error('types2Conditions', arguments)
 
-        // handle multiple types case
-        if( type.indexOf('|') !== -1 ){
-                var conditions = ''
-                type.split('|').forEach(function(type){
-                        if( conditions.length > 0 ) conditions += ' || '
-                        conditions += types2Conditions(type, varName)
-                })
-                return conditions
-        }
+function generateCheckCode(varType, varName, message){
+        var conditionString = types2Conditions(varType, varName);
+        if( pluginOptions.errorType === 'assert' ){
+                var str = "console.assert("+conditionString+", '"+message+"');"                
+        }else if( pluginOptions.errorType === 'exception' ){
+                var str = "if(!("+conditionString+")) throw new TypeError('"+message+"');"
+        }else   console.assert(false)
+        return str
 
-        // handle single type
-        if( type.toLowerCase() === 'string' ){
-                return  "typeof("+varName+") === 'string'";
-        }else if( type.toLowerCase() === 'number' ){
-                return  "typeof("+varName+") === 'number'";
-        }else if( type.toLowerCase() === 'undefined' ){
-                return  "typeof("+varName+") === 'undefined'";
-        }else if( type.toLowerCase() === 'function' ){
-                return  varName+" instanceof Function";
-        }else if( type.toLowerCase() === 'null' ){
-                return  varName+" === null";
-        }else{
-                return varName+" instanceof "+type;
+        function types2Conditions(type, varName){
+                // console.error('types2Conditions', arguments)
+
+                // handle multiple types case
+                if( type.indexOf('|') !== -1 ){
+                        var conditions = ''
+                        type.split('|').forEach(function(type){
+                                if( conditions.length > 0 ) conditions += ' || '
+                                conditions += types2Conditions(type, varName)
+                        })
+                        return conditions
+                }
+
+                // handle single type
+                if( type.toLowerCase() === 'string' ){
+                        return  "typeof("+varName+") === 'string'";
+                }else if( type.toLowerCase() === 'number' ){
+                        return  "typeof("+varName+") === 'number'";
+                }else if( type.toLowerCase() === 'undefined' ){
+                        return  "typeof("+varName+") === 'undefined'";
+                }else if( type.toLowerCase() === 'function' ){
+                        return  varName+" instanceof Function";
+                }else if( type.toLowerCase() === 'null' ){
+                        return  varName+" === null";
+                }else{
+                        return varName+" instanceof "+type;
+                }
         }
 }
 
@@ -56,16 +68,12 @@ module.exports = function(babel) {
                         	contentLines   = file.file.code.split('\n')
 			},
                         FunctionDeclaration : function(path) {
-                                var nodeFunctionBody = path.node.body.body                                
-                                postProcessFunction(path, nodeFunctionBody)
+                                postProcessFunction(path)
                         },
                         FunctionExpression : function(path) {
-                                var nodeFunctionBody = path.node.body.body
-                                postProcessFunction(path, nodeFunctionBody)
+                                postProcessFunction(path)
                         },
                         ArrowFunctionExpression : function(path){
-                                // console.log('ArrowFunctionExpression HERE', path.node)
-
                                 // Handle the implicit return case
                                 // - modify ```() => 'foo'``` into ```() => { return 'foo' }```
                                 // - then apply the usual return rules
@@ -81,8 +89,7 @@ module.exports = function(babel) {
                                 console.assert(path.node.body.type === 'BlockStatement')
                                 
                                 // call postProcessFunction - for usual return rule
-                                var nodeFunctionBody = path.node.body.body
-                                postProcessFunction(path, nodeFunctionBody)
+                                postProcessFunction(path)
                         },
                 }
         }
@@ -91,7 +98,8 @@ module.exports = function(babel) {
         //////////////////////////////////////////////////////////////////////////////////
         //                Comments
         //////////////////////////////////////////////////////////////////////////////////
-        function postProcessFunction(path, nodeFunctionBody){
+        function postProcessFunction(path){
+                var nodeFunctionBody = path.node.body.body
                 var functionPath = path
                 //////////////////////////////////////////////////////////////////////////////////
                 //                Comments
@@ -111,8 +119,7 @@ module.exports = function(babel) {
                         var code = ''
                         Object.keys(jsdocJson.params).forEach(function(varName, index){
                                 var param = jsdocJson.params[varName]
-                                var conditionString = types2Conditions(param.type, varName);
-                                code += 'console.assert('+conditionString+', "Invalid type for argument '+index+' '+varName+'");'
+                                code += generateCheckCode(param.type, varName, 'Invalid type for argument '+index+' '+varName);
                         })
                         // code = '{' + code + '}'
                         var paramTemplate = babel.template(code);
@@ -151,16 +158,12 @@ module.exports = function(babel) {
                                 }
                                 var parentFunction = getParentFunction(path)
                                 if( parentFunction !== functionPath ) return;
-                                // console.error('parentFunction', path)
-                                
-                                
-                                var conditionString = types2Conditions(jsdocJson.return.type, 'VARNAME');
-                                var codeConditions = 'console.assert('+conditionString+', "Invalid type for return value");\n'
+
 
                                 // generate code in string
                                 var code = ''
                                 code += 'var VARNAME = (RETURN_EXPRESSION);'
-                                code += codeConditions
+                                code +=  generateCheckCode(jsdocJson.return.type, 'VARNAME', "Invalid type for return value");
                                 code += 'return VARNAME;'
 
                                 if( pluginOptions.minimalReturn === true ){
