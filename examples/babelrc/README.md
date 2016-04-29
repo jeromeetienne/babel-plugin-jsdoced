@@ -1,1 +1,1 @@
-This directory shows a .babelrc using babel-plugin-transform-jsdoced 
+This directory shows a .babelrc using babel-plugin-jsdoced 

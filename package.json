@@ -1,8 +1,8 @@
 {
-  "name": "babel-plugin-transform-jsdoced",
+  "name": "babel-plugin-jsdoced",
   "version": "1.2.4",
   "description": "It implements jsdoced javascript as a babel plugin",
-  "main": "transform-jsdoced.js",
+  "main": "plugin-jsdoced.js",
   "directories": {
     "example": "examples"
   },
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeromeetienne/babel-plugin-transform-jsdoced.git"
+    "url": "git+https://github.com/jeromeetienne/babel-plugin-jsdoced.git"
   },
   "keywords": [
     "jsdoc",
@@ -39,7 +39,7 @@
   "author": "Jerome Etienne",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jeromeetienne/babel-plugin-transform-jsdoced/issues"
+    "url": "https://github.com/jeromeetienne/babel-plugin-jsdoced/issues"
   },
-  "homepage": "https://github.com/jeromeetienne/babel-plugin-transform-jsdoced#readme"
+  "homepage": "https://github.com/jeromeetienne/babel-plugin-jsdoced#readme"
 }

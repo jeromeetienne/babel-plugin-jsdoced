@@ -1,7 +1,7 @@
 {
   "name": "nicelib",
   "version": "1.0.0",
-  "description": "Fake library - example of babel-plugin-transform-jsdoced",
+  "description": "Fake library - example of babel-plugin-jsdoced",
   "main": "gulpfile.js",
   "devDependencies": {
     "gulp": "*",

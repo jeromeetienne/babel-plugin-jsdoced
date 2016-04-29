@@ -2,6 +2,7 @@
 
 - added examples for eslintrc 
 - added gulpfile examples 
+- renamed repo into babel-plugin-jsdoced
 
 # v1.2.4
 - removed silly debug log

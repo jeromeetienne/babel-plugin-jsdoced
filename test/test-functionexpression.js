@@ -14,7 +14,7 @@ var myFunctionExpression = function(myString){
 
 var babel = require("babel-core")
 var result = babel.transform(code, {
-        plugins: ["./transform-jsdoced.js"]
+        plugins: ["./plugin-jsdoced.js"]
 });
 // eval the result
 eval(result.code)

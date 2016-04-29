@@ -1,4 +1,4 @@
-This is an example of using babel-plugin-transform-jsdoced in a gulpfile.js.
+This is an example of using babel-plugin-jsdoced in a gulpfile.js.
 This gulpfile.js is for a library ```nicelib.js```. It is a fake library
 built up for the example. All the source of the library is ```/src```.
 
