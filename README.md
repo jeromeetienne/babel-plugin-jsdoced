@@ -1,4 +1,4 @@
-# babel-plugin-transform-jsdoced
+# babel-plugin-jsdoced
 
 a babel plugin which use jsdoc to implement strong typing in javascript 
 It implements the principle of [jsdoced javascript](http://jsdocedjs.org) as a babel plugin.
@@ -9,7 +9,7 @@ It is working in browser and node.js. it has source maps.
 On top of it it supports [es6 arrow functions](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions) too!
 If you use react, don't worry it works with jsx without trouble. 
 
-Check it out! [How to install it](https://github.com/jeromeetienne/babel-plugin-transform-jsdoced#installation)
+Check it out! [How to install it](https://github.com/jeromeetienne/babel-plugin-jsdoced#installation)
 
 ## What is JSDoced Javascript ?
 Here is a [Youtube video "JSDoced JS in 1min"](https://youtu.be/W-cdPCNxNJ8), it worth the whole minute :)
@@ -40,12 +40,12 @@ or in a single image
   - and hopefully detect errors earlier.
   - Specially interesting when you are learning a library. because you are more likely to do mistakes.
     better for your users :)
-  - see [/examples/gulpfile](https://github.com/jeromeetienne/babel-plugin-transform-jsdoced/tree/master/examples/gulpfile) for a example on how to that with gulp
+  - see [/examples/gulpfile](https://github.com/jeromeetienne/babel-plugin-jsdoced/tree/master/examples/gulpfile) for a example on how to that with gulp
 
 ## Installation
 
 ```sh
-$ npm install babel-plugin-transform-jsdoced
+$ npm install babel-plugin-jsdoced
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ $ npm install babel-plugin-transform-jsdoced
 
 ```js
 {
-  "plugins": ["transform-jsdoced"]
+  "plugins": ["jsdoced"]
 }
 ```
 
@@ -65,26 +65,26 @@ With es6
 ```js
 {
   "presets": ["es2015"],
-  "plugins": ["transform-jsdoced"]
+  "plugins": ["jsdoced"]
 }
 ```
 
 ### Via CLI
 
 ```sh
-$ babel --plugins transform-jsdoced script.js
+$ babel --plugins jsdoced script.js
 ```
 
 With es6
 
 ```sh
-$ babel --presets=es2015 --plugins transform-jsdoced ./sample-es6.js
+$ babel --presets=es2015 --plugins jsdoced ./sample-es6.js
 ```
 
 ### Via Node API
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["transform-jsdoced"]
+  plugins: ["jsdoced"]
 });
 ```

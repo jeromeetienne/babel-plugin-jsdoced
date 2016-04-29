@@ -1,4 +1,8 @@
-# v1.2.5-dev
+# v1.2.6-dev
+
+Nothing yet
+
+# v1.2.5
 
 - added examples for eslintrc 
 - added gulpfile examples 
