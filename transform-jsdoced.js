@@ -2,12 +2,7 @@ var jsdocParse	= require('./vendor/jsdocParse.js')
 
 // @TODO should i expose this as actual plugin option, settable from babel
 var pluginOptions = {
-        /**
-         * true if the return should be scoped in a {} IIF necessary
-         * false if it should ALWAYS be scoped in a {}
-         * @type {Boolean}
-         */
-        minimalReturn : true,
+        minimalReturn : true, // true if the return should be scoped in a {} IIF necessary
 }
 
 //////////////////////////////////////////////////////////////////////////////////

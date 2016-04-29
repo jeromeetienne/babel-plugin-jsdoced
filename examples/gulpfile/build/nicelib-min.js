@@ -1,1 +1,1 @@
-function isOdd(d){d%2?console.log(d+" is odd"):console.log(d+" is even")}isOdd(0),isOdd(1),isOdd("foobar");
+function myFunctionDeclaration(o,n){return o+n}function isOdd(o){o%2?console.log(o+" is odd"):console.log(o+" is even")}console.log("return is ",myFunctionDeclaration("foo","bar")),isOdd(0),isOdd(1),isOdd("foobar");

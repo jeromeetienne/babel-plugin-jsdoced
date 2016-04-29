@@ -12,12 +12,12 @@ var eslint = require('gulp-eslint');
 var sourcemaps = require('gulp-sourcemaps');
 
 var fileNames = [
-	'./src/isOdd.js',
+	'./src/*.js',
 ]
 
 
 gulp.task('default', ['build-everything'])
-gulp.task('build-everything', ['build-plain', 'build-debug', 'build-minify'])
+gulp.task('build-everything', ['build-plain', 'build-debug', 'build-minify', 'build-jsdoced'])
 
 //////////////////////////////////////////////////////////////////////////////////
 //		Comments
