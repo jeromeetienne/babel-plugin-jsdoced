@@ -1,4 +1,11 @@
-- https://github.com/babel/babel/blob/master/README.md
+- to rename babel-plugin-jsdoced. simpler to read, and type.
+- implement travis tests - https://github.com/babel/babel/blob/master/README.md
+- generate console.assert or throw on options
+- test with property and proxy
+  - create another plugin, and use it only in the makefile for now
+  - plugin-jsdoced-property.js
+  
+---
 - TODO complete the clean return
   - what about the following rules. if parent got a single child. 
 - BUG: following code make parser crash 
