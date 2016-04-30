@@ -1,9 +1,18 @@
 var jsdocParse	= require('./vendor/jsdocParse.js')
 
-// @TODO should i expose this as actual plugin option, settable from babel
+//////////////////////////////////////////////////////////////////////////////////
+//                Comments
+//////////////////////////////////////////////////////////////////////////////////
+
 var pluginOptions = {
-        minimalReturn : true, // true if the return should be scoped in a {} IIF necessary
+        minimalReturn : true, // true if the return should be scoped in a {} IIF necessary - TODO to remove. this is useelessly complex. only in case there is a bug in this code
         errorType : 'assert', // 'assert' to generate error as assert, 'exception' to generate error as exception
+}
+
+function updatePluginOptions(state){
+        // NOTE: the api to handle babel plugin options is... weird to say the list
+        if( state.opts.minimalReturn !== undefined )  pluginOptions.minimalReturn = state.opts.minimalReturn
+        if( state.opts.errorType !== undefined )  pluginOptions.errorType = state.opts.errorType
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -67,13 +76,17 @@ module.exports = function(babel) {
                                 // Store the content lines to parse the jsdoc
                         	contentLines   = file.file.code.split('\n')
 			},
-                        FunctionDeclaration : function(path) {
+                        FunctionDeclaration : function(path, state) {
+                                updatePluginOptions(state)
                                 postProcessFunction(path)
                         },
-                        FunctionExpression : function(path) {
+                        FunctionExpression : function(path, state) {
+                                updatePluginOptions(state)
                                 postProcessFunction(path)
                         },
-                        ArrowFunctionExpression : function(path){
+                        ArrowFunctionExpression : function(path, state){
+                                updatePluginOptions(state)
+
                                 // Handle the implicit return case
                                 // - modify ```() => 'foo'``` into ```() => { return 'foo' }```
                                 // - then apply the usual return rules
@@ -141,9 +154,10 @@ module.exports = function(babel) {
                 // TODO to trap the return, do a visitor to get the return at the root of the function
                 var visitorReturn = {
                         ReturnStatement : function(path){
+
                                 // console.error('ReturnStatement', path.parentPath.type)
                                 // When processing the 'return' path, mark it so you know you've processed it.
-                                if (path.node[RETURN_MARKER]) return;
+                                if (path.node[RETURN_MARKER] === true ) return;
 
                                 // Get the parent function
                                 function getParentFunction(path){

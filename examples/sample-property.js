@@ -1,6 +1,10 @@
-var foo = {}
+var foo = {
+        hello: 'world'
+}
 
 /**
- * @type {Boolean}
+ * @type {boolean}
  */
 foo.bar	= true;
+
+foo.bar = 'dd'
