@@ -1,4 +1,5 @@
-- make option reachable via usual babel plugins
+- put types2Conditions into jsdoc parse
+- DONE make option reachable via usual babel plugins
 - implement travis tests - https://github.com/babel/babel/blob/master/README.md
 - test with property and proxy
   - create another plugin, and use it only in the makefile for now

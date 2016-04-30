@@ -14,39 +14,6 @@ console.dir(babelTraverse)
 //                Comments
 //////////////////////////////////////////////////////////////////////////////////
 
-function types2Conditions(type, varName){
-        // console.error('types2Conditions', arguments)
-
-        // handle multiple types case
-        if( type.indexOf('|') !== -1 ){
-                var conditions = ''
-                type.split('|').forEach(function(type){
-                        if( conditions.length > 0 ) conditions += ' || '
-                        conditions += types2Conditions(type, varName)
-                })
-                return conditions
-        }
-
-        // handle single type
-        if( type.toLowerCase() === 'string' ){
-                return  "typeof("+varName+") === 'string'";
-        }else if( type.toLowerCase() === 'number' ){
-                return  "typeof("+varName+") === 'number'";
-        }else if( type.toLowerCase() === 'undefined' ){
-                return  "typeof("+varName+") === 'undefined'";
-        }else if( type.toLowerCase() === 'function' ){
-                return  varName+" instanceof Function";
-        }else if( type.toLowerCase() === 'null' ){
-                return  varName+" === null";
-        }else{
-                return varName+" instanceof "+type;
-        }
-}
-
-//////////////////////////////////////////////////////////////////////////////////
-//                Comments
-//////////////////////////////////////////////////////////////////////////////////
-
 module.exports = function(babel) {
         var t = babel.types
 	var contentLines;
@@ -99,7 +66,7 @@ module.exports = function(babel) {
                                 //////////////////////////////////////////////////////////////////////////////////
 
                                 
-                                var conditionString = types2Conditions(jsdocJson.type, 'value')
+                                var conditionString = jsdocParse.types2Conditions(jsdocJson.type, 'value')
 
                                 var code = ''
                                 code += "OBJECT._jsdocedProperties = OBJECT._jsdocedProperties || new Object;"

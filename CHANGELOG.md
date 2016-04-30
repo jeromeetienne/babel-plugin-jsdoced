@@ -6,7 +6,8 @@
   - minimalReturn : true/false - if true, try not to put ```return``` into a block statement (default). if false, always put a block statement
   - errorType : 'assert'/'exception' - if equal to 'assert', errors are notified by ```console.assert()```. 
     if equal to 'exception', notify errors by ```throw TypeError()```
-- started plugin-jsdoced-property - still in beta
+- started plugin-jsdoced-property - try to apply type check for property too 
+  - still in beta
 
 # v1.2.5
 - added examples for eslintrc 

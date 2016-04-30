@@ -20,44 +20,14 @@ function updatePluginOptions(state){
 //////////////////////////////////////////////////////////////////////////////////
 
 function generateCheckCode(varType, varName, message){
-        var conditionString = types2Conditions(varType, varName);
+        var conditionString = jsdocParse.types2Conditions(varType, varName);
         if( pluginOptions.errorType === 'assert' ){
                 var str = "console.assert("+conditionString+", '"+message+"');"                
         }else if( pluginOptions.errorType === 'exception' ){
                 var str = "if(!("+conditionString+")) throw new TypeError('"+message+"');"
         }else   console.assert(false)
         return str
-
-        function types2Conditions(type, varName){
-                // console.error('types2Conditions', arguments)
-
-                // handle multiple types case
-                if( type.indexOf('|') !== -1 ){
-                        var conditions = ''
-                        type.split('|').forEach(function(type){
-                                if( conditions.length > 0 ) conditions += ' || '
-                                conditions += types2Conditions(type, varName)
-                        })
-                        return conditions
-                }
-
-                // handle single type
-                if( type.toLowerCase() === 'string' ){
-                        return  "typeof("+varName+") === 'string'";
-                }else if( type.toLowerCase() === 'number' ){
-                        return  "typeof("+varName+") === 'number'";
-                }else if( type.toLowerCase() === 'undefined' ){
-                        return  "typeof("+varName+") === 'undefined'";
-                }else if( type.toLowerCase() === 'function' ){
-                        return  varName+" instanceof Function";
-                }else if( type.toLowerCase() === 'null' ){
-                        return  varName+" === null";
-                }else{
-                        return varName+" instanceof "+type;
-                }
-        }
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
