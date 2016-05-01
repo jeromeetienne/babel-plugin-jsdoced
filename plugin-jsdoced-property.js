@@ -135,7 +135,7 @@ module.exports = function(babel) {
 
                                 console.error('parentPath', path.parentPath.node)
                                 console.error('ObjectProperty', path.node)
-                                
+                                debugger;
                                 console.error('jsdocJson', jsdocJson)
                                 
                                 // check if there is a _jsdocedProperties in the parent Object
