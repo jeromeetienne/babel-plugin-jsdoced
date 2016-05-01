@@ -1,4 +1,4 @@
-- put types2Conditions into jsdoc parse
+- DONE put types2Conditions into jsdoc parse
 - DONE make option reachable via usual babel plugins
 - implement travis tests - https://github.com/babel/babel/blob/master/README.md
 - test with property and proxy
