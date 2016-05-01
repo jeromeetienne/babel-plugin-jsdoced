@@ -1,5 +1,10 @@
 var foo = {
-        hello: 'world'
+        /**
+         * great salutation
+         * @type {String}
+         */
+        message: 'hello world',
+        command: 'run'
 }
 
 /**

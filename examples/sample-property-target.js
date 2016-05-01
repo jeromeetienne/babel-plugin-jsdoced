@@ -1,4 +1,14 @@
-var foo = new Proxy({}, {
+var foo = new Proxy({
+        /**
+         * great salutation
+         * @type {String}
+         */
+        message: 'hello world',
+        command: 'run',
+	_jsdocedProperties : {
+		message: function(value){ return typeof message === 'string' },
+	}
+}, {
 	set: function(object, property, value) {
 		if( object._jsdocedProperties && object._jsdocedProperties[property] ){
 			var checkingFunction = object._jsdocedProperties[property]

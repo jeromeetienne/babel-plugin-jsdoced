@@ -6,9 +6,6 @@
 var jsdocParse = require('./vendor/jsdocParse.js')
 var babelTraverse = require('babel-traverse')
 
-console.dir(babelTraverse)
-// return
-// check https://github.com/jeromeetienne/jsdoced.js/blob/master/libs/processFile.js#L97
 
 //////////////////////////////////////////////////////////////////////////////////
 //                Comments
@@ -28,6 +25,9 @@ module.exports = function(babel) {
                                 // Store the content lines to parse the jsdoc
                         	contentLines   = file.file.code.split('\n')
 			},
+                        //////////////////////////////////////////////////////////////////////////////////
+                        //                Comments
+                        //////////////////////////////////////////////////////////////////////////////////
                         AssignmentExpression : function(path, state) {
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if( path.node[OBJECT_JSDOCED_MARKER] ) return;
@@ -78,24 +78,21 @@ module.exports = function(babel) {
                                         PROPERTYNAME : leftExpression.property,
                                 })
 
-                                // // marker internal 
-                                // babel.traverse(block, {
-                                //         AssignmentExpression : function(path){ path.node[OBJECT_JSDOCED_MARKER] = true; },
-                                //         ObjectExpression: function(path){ path.node[OBJECT_JSDOCED_MARKER] = true; }
-                                // }, state)
-
                                 path.insertBefore(block);
-
-
                         },
-                        ObjectExpression : function(path){
-                                // console.error('ObjectExpression', path.node)
+                        
+                        //////////////////////////////////////////////////////////////////////////////////
+                        //                Comments
+                        //////////////////////////////////////////////////////////////////////////////////
 
+                        ObjectExpression : function(path){
                                 // When processing the 'return' path, mark it so you know you've processed it.
                                 if( path.node[OBJECT_JSDOCED_MARKER] ) return;
 
-                                var code = `new Proxy(TARGET, {
-                                	set: function(object, property, value) {
+                                // console.error('ObjectExpression', path.node)
+
+                                var codeProxyInit = `new Proxy(TARGET, {
+                                	set: function jsdocedPropertyTypeCheck(object, property, value) {
                                                 // console.log("check property", property, "with value", value)
                                 		if( object._jsdocedProperties && object._jsdocedProperties[property] ){
                                                         var checkingFunction = object._jsdocedProperties[property]
@@ -106,7 +103,7 @@ module.exports = function(babel) {
                                 	}
                                 })`
 
-                                var template = babel.template(code);
+                                var template = babel.template(codeProxyInit);
                                 var block = template({
                                         TARGET : path.node
                                 })
@@ -116,15 +113,45 @@ module.exports = function(babel) {
 
                                 // 
                                 path.traverse({
-                                        AssignmentExpression : function(path){
-                                                path.node[OBJECT_JSDOCED_MARKER] = true;                                                
-                                        },
                                         ObjectExpression: function(path){
                                                 path.node[OBJECT_JSDOCED_MARKER] = true;
                                         }
                                 })
 
-                        }
+                        },
+                        //////////////////////////////////////////////////////////////////////////////////
+                        //                Comments
+                        //////////////////////////////////////////////////////////////////////////////////
+
+                        ObjectProperty : function(path){
+                                
+                                if( path.node.key.name === 'set' )      return
+
+                                
+                                var lineNumber  = path.node.loc.start.line-1
+                                var jsdocJson	= jsdocParse.extractJsdocJson(contentLines, lineNumber)
+                        	// if no jsdocJson, do nothing
+                        	if( jsdocJson === null )	return
+
+                                console.error('parentPath', path.parentPath.node)
+                                console.error('ObjectProperty', path.node)
+                                
+                                console.error('jsdocJson', jsdocJson)
+                                
+                                // check if there is a _jsdocedProperties in the parent Object
+                                console.assert(path.parentPath.node.type === 'ObjectExpression')
+                                var hasJsdocedProperties = path.parentPath.node.properties.find(function(node){
+                                        console.assert(node.type === 'ObjectProperty')
+                                        var found = node.key.name === '_jsdocedProperties' ? true : false
+                                        return found;
+                                }) ? true : false;
+                                console.log('hasJsdocedProperties', hasJsdocedProperties)
+                                
+                        },
+                        
+                        //////////////////////////////////////////////////////////////////////////////////
+                        //                Comments
+                        //////////////////////////////////////////////////////////////////////////////////
                 }
         }
 }
