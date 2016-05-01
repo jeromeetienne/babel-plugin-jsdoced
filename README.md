@@ -14,8 +14,9 @@ If you use react, don't worry it works with jsx without trouble.
 Check it out! [How to install it](https://github.com/jeromeetienne/babel-plugin-jsdoced#installation)
 
 
-- test status: [![Build](https://travis-ci.org/jeromeetienne/babel-plugin-jsdoced.svg?branch=master)](https://travis-ci.org/jeromeetienne/babel-plugin-jsdoced)
-- wanna chat ? [![Chat](https://badges.gitter.im/jeromeetienne/babel-plugin-jsdoced.svg)](https://gitter.im/jeromeetienne/babel-plugin-jsdoced?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Chat](https://badges.gitter.im/jeromeetienne/babel-plugin-jsdoced.svg)](https://gitter.im/jeromeetienne/babel-plugin-jsdoced?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![npm version](https://badge.fury.io/js/babel-plugin-jsdoced.svg)](https://badge.fury.io/js/babel-plugin-jsdoced)
+[![Build](https://travis-ci.org/jeromeetienne/babel-plugin-jsdoced.svg?branch=master)](https://travis-ci.org/jeromeetienne/babel-plugin-jsdoced)
 
 ## What is JSDoced Javascript ?
 Here is a [Youtube video "JSDoced JS in 1min"](https://youtu.be/W-cdPCNxNJ8), it worth the whole minute :)
