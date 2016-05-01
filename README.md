@@ -1,5 +1,7 @@
 # babel-plugin-jsdoced
 
+[![Join the chat at https://gitter.im/jeromeetienne/babel-plugin-jsdoced](https://badges.gitter.im/jeromeetienne/babel-plugin-jsdoced.svg)](https://gitter.im/jeromeetienne/babel-plugin-jsdoced?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 a babel plugin which use jsdoc to implement strong typing in javascript 
 It implements the principle of [jsdoced javascript](http://jsdocedjs.org) as a babel plugin.
 It implements strong typing for functions in javascript.
