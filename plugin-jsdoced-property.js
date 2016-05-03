@@ -93,7 +93,6 @@ module.exports = function(babel) {
 
                                 var codeProxyInit = `new Proxy(TARGET, {
                                 	set: function jsdocedPropertyTypeCheck(object, property, value) {
-                                                // console.log("check property", property, "with value", value)
                                 		if( object._jsdocedProperties && object._jsdocedProperties[property] ){
                                                         var checkingFunction = object._jsdocedProperties[property]
                                                         var isValid = checkingFunction(value)
@@ -145,7 +144,7 @@ module.exports = function(babel) {
                                         var found = node.key.name === '_jsdocedProperties' ? true : false
                                         return found;
                                 }) ? true : false;
-                                console.log('hasJsdocedProperties', hasJsdocedProperties)
+                                console.error('hasJsdocedProperties', hasJsdocedProperties)
                                 
                         },
                         

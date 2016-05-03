@@ -1,7 +1,7 @@
 - test with property and proxy
   - create another plugin, and use it only in the makefile for now
   - plugin-jsdoced-property.js
-
+- property: make a sample of each jsdoc case. 
 - DONE to rename babel-plugin-jsdoced. simpler to read, and type.
 - DONE generate console.assert or throw on options
 - DONE put types2Conditions into jsdoc parse

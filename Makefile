@@ -2,7 +2,8 @@ sample-jsx-react:
 	babel --presets=react --plugins ../plugin-jsdoced-function.js ./examples/sample-jsx-react.js
 
 sample-property:
-	node-debug --cli babel --plugins ../plugin-jsdoced-property.js examples/sample-property.js
+	babel --plugins ../plugin-jsdoced-property.js examples/sample-property.js
+	# node-debug --cli babel --plugins ../plugin-jsdoced-property.js examples/sample-property.js
 
 sample-eslint-jsdoc:
 	eslint --rule '{valid-jsdoc:["error", {"requireReturn": false}]}' examples/sample-eslint-jsdoc.js

@@ -4,7 +4,7 @@ var foo = {
          * @type {String}
          */
         message: 'hello world',
-        command: 'run'
+        command: 'run',
 }
 
 /**

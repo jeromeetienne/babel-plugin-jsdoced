@@ -6,7 +6,7 @@ var foo = new Proxy({
         message: 'hello world',
         command: 'run',
 	_jsdocedProperties : {
-		message: function(value){ return typeof message === 'string' },
+		message: function(value){ return typeof value === 'string' },
 	}
 }, {
 	set: function(object, property, value) {
@@ -26,4 +26,5 @@ var foo = new Proxy({
  */
 foo._jsdocedProperties = foo._jsdocedProperties || {}
 foo._jsdocedProperties.bar = function(value){ return typeof value === 'boolean' }
-foo.bar	= 100
+// foo.bar	= 100
+foo.message = 'newValue'
